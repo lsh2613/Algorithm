@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class b1541 {
     public static void main(String[] args) {
+        /**
+         * +를 먼저 계산하면 됨
+         */
         Scanner sc = new Scanner(System.in);
         String str = sc.next();
 
