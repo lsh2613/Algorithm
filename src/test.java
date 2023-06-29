@@ -1,30 +1,25 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class test {
-    static int x = -1, y = -1;
-    static int graph[][];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
 
-    public static void main(String[] args) {
+        String[] input = br.readLine().split(" ");
+        int[] ints = new int[N];
+        int[] sortedInts = new int[N];
 
-        Scanner sc = new Scanner(System.in);
-        while (x != 0 || y != 0) {
-            x = sc.nextInt();
-            y = sc.nextInt();
-            graph = new int[x][y];
+        for (int i = 0; i < N; i++)
+            sortedInts[i] = ints[i]= Integer.parseInt(input[i]);
 
-            for (int i = 0; i < x; i++) {
-                String str = sc.next();
-                for (int j = 0; j < y; j++) {
-                    graph[i][j] = str.charAt(j*2);
-                }
-            }
-
-            for (int arr[] :
-                    graph) {
-                System.out.println(Arrays.toString(arr));
-            };
+        Arrays.sort(sortedInts);
+        for (int i = 0; i < N; i++) {
+            int idx = Arrays.binarySearch(sortedInts, ints[i]);
+            System.out.print(idx+" ");
         }
-    }
 
+    }
 }

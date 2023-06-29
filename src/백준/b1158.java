@@ -1,4 +1,4 @@
-package 백준.구현;
+package 백준;
 
 import java.util.LinkedList;
 import java.util.List;

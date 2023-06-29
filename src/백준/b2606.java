@@ -1,4 +1,4 @@
-package 백준.graph;
+package 백준;
 
 import java.util.ArrayList;
 import java.util.Scanner;

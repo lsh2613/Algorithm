@@ -1,4 +1,4 @@
-package 백준.그리디;
+package 백준;
 
 import java.util.Arrays;
 import java.util.Comparator;
