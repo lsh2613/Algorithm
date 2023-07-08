@@ -1,60 +1,63 @@
 package swEA;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
-public class s1244 {
-    public static int[] arr;
-    // 최대 값
-    public static int max = 0;
-    // dfs 함수 (인덱스, 깊이, 변동 제한 수)
-    public static void dfs(int k, int cnt, int chance) {
-        // 만약 깊이와 제한 수와 같다면(다 움직였다면)
-        if(chance == cnt) {
-            // Stringbuffer를 string으로 변환하고 parseInt 적용은 가능(그냥 String은 불가능)
-            StringBuffer sb = new StringBuffer();
-            for(int i : arr)
-                sb.append(i);
-            // 최대값 비교
-            max = Math.max(max, Integer.parseInt(sb.toString()));
+class s1244
+{
+    static int[] nums;
+    static int max;
+    public static void main(String args[]) throws Exception
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int T = Integer.parseInt(br.readLine());
+
+        for(int test_case = 1; test_case <= T; test_case++) {
+            st = new StringTokenizer(br.readLine());
+
+            String str = st.nextToken();
+            nums = str.chars().map(c -> c - '0').toArray();
+            int cnt = Integer.parseInt(st.nextToken());
+            int len = str.length();
+
+            // 자릿수 보다 교환횟수가 더 큰 경우 불필요한 연산이 수행
+            // 자릿수 만큼의 교환만 일어나면 되므로 횟수를 줄여준다
+            if(cnt>len) {
+                cnt = len;
+            }
+
+            max = 0; // 새로운 테스트 케이스에 대해 max=0 부터 시작
+            dfs(0, 0, cnt);
+            System.out.printf("#%d %d\n", test_case, max);
+        }
+    }
+
+    static void dfs(int start, int cur, int cnt) {
+
+        if (cur == cnt) { // 교환 횟수와 동일하다면 dfs 종료
+            StringBuilder sb = new StringBuilder();
+            Arrays.stream(nums).forEach(i -> sb.append(i));
+            int num = Integer.parseInt(sb.toString());
+            max = Math.max(max, num); // 완전 탐색을 통해 교환된 모든 경우의 수 중 가장 큰 값을 찾기 위함
             return;
         }
-        //전 범위 탐색 (시작 인덱스 ~ 끝)
-        for(int i = k ; i < arr.length ; i++)
-            // 전 범위 탐색(시작 + 1 ~ 끝)
-            for(int j = i + 1 ; j < arr.length ; j++)
-                // 만약 순서를 바꿀 필요가 있다면
-                if(arr[i] <= arr[j]) {
-                    // swap
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    // dfs 재귀 호출 (깊이는 1 추가)
-                    dfs(i, cnt + 1, chance);
-                    // 다시 swap 해서 자리 되돌림
-                    temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+        else { // 완전 탐색
+            for (int i = start; i < nums.length-1; i++) {
+                for (int j = i+1; j < nums.length; j++) {
+                    swap(i, j);
+                    dfs(i, cur + 1, cnt);
+                    swap(i, j); // dfs로 던져놓고 다음 과정을 위해 다시 되돌림
                 }
-    }
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
-        for(int test_case = 1 ; test_case <= T ; test_case++) {
-            // max는 항상 초기화 해줘야함
-            max = 0;
-            // 번호판 입력
-            int num = sc.nextInt();
-            // 제한 횟수 입력
-            int chance = sc.nextInt();
-            // int -> int[] (외워둘것)
-            arr = Integer.toString(num).chars().map(c -> c - '0').toArray();
-
-
-
-            // dfs 실행
-            dfs(0, 0, chance);
-            System.out.println("#" + test_case + " " + max);
+            }
         }
-        return;
     }
+    static void swap(int a, int b) {
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
+    }
+
 }
