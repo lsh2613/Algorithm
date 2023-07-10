@@ -1,6 +1,8 @@
+package swEA;
+
 import java.util.Scanner;
 
-class Solution
+class s15758
 {
     public static long lcm(long a, long b) {
         int gcd_value = gcd((int)a, (int)b);
