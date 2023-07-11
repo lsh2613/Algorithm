@@ -32,7 +32,7 @@ class Node{
         return cost;
     }
 }
-public class Solution {
+public class 민석이의마니또 {
     static int N, M, minSum;
     static ArrayList<ArrayList<Node>> graph;
     static boolean[] visited;
@@ -40,6 +40,7 @@ public class Solution {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
         int T = Integer.parseInt(br.readLine());
         for (int tc = 1; tc <= T; tc++) {
             st = new StringTokenizer(br.readLine());
@@ -70,9 +71,16 @@ public class Solution {
                 findMinCostCycle(i,i, 0); // 노드들에 대한 사이클의 최솟값이 minSum에 저장
                 minCostCycle = Math.min(minCostCycle, minSum);
             }
-            System.out.print("#" + tc + " ");
-            System.out.println(minCostCycle == Integer.MAX_VALUE ? -1 : minCostCycle);
+            sb.append("#" + tc + " ");
+            if (minCostCycle == Integer.MAX_VALUE) {
+                sb.append(-1+"\n");
+            }else
+                sb.append(minCostCycle+"\n");
+
+//            System.out.print("#" + tc + " ");
+//            System.out.println(minCostCycle == Integer.MAX_VALUE ? -1 : minCostCycle);
         }
+        System.out.println(sb);
     }
 
     static void findMinCostCycle(int start, int cur, int sum) {
