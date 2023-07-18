@@ -1,4 +1,6 @@
-class Solution {
+package 프로그래머스;
+
+class p60058 {
 
     // "균형잡힌 괄호 문자열"의 인덱스 반환
     public int balancedIndex(String p) {
