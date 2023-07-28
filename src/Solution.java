@@ -1,123 +1,106 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-class UserSolution {
-    static int[][] child;
-    static int N;
-    public void dfs_init(int N, int[][] path) {
-        child = new int[N + 1][N + 1];
-        this.N = N;
-        for (int i = 0; i < path.length; i++) {
-            child[path[i][0]][path[i][1]] = 1;
-        }
-    }
-
-    public int dfs(int K) {
-        for (int i = 0; i <= N; i++) {
-        }
-
-        return -1;
-    }
-}
-public class Solution {
-
-    private final static int MAX_N = 40;
-    private final static int MAX_K = 98;
-    private final static int MIN_N = 2;
-    private final static int MAX_CHILD = 5;
-
-    private final static UserSolution usersolution = new UserSolution();
-
-    private static BufferedReader br;
-
-    private static long seed = 12345;
-
-    private static int[][] path = new int[MAX_N][2];
-    private static int[] p = new int[MAX_K+2];
-    private static int[] c = new int[MAX_K+2];
-
-    public static long pseudo_rand(int max) {
-        seed = (seed * 1103515245 + 12345) & 0x7fffffffL;
-        return seed % max;
-    }
-
-    public static void makeTree(int N) {
-
-        boolean[] check = new boolean[MAX_K+2];
-
-        for(int i = 1; i < MAX_K + 2; i++) {
-            p[i] = c[i] = -1;
-        }
-        c[(int)(pseudo_rand(MAX_K+1)+1)] = 0;
-
-        for(int i = 0; i < N; i++) {
-            int pi = (int)(pseudo_rand(MAX_K+1)+1);
-            while(c[pi] < 0 || c[pi] >= MAX_CHILD) {
-                pi++;
-                if(pi == MAX_K+2) pi = 1;
-            }
-
-            int ci = (int)(pseudo_rand(MAX_K+1)+1);
-            while(c[ci] >= 0) {
-                ci++;
-                if(ci == MAX_K+2) ci = 1;
-            }
-
-            p[ci] = pi;
-            c[pi]++;
-            c[ci] = 0;
-        }
-
-        for(int i = 0; i < N; i++) {
-            int e = (int)(pseudo_rand(MAX_K+1)+1);
-            while(check[e] == true || c[e] < 0 || p[e] == -1) {
-                e++;
-                if(e == MAX_K + 2) e = 1;
-            }
-            check[e] = true;
-            path[i][0] = p[e];
-            path[i][1] = e;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        int TC, N, Q, K, ans, ret;
-        int totalScore = 0, score;
-        String str;
-        StringTokenizer st;
-
-        br = new BufferedReader(new InputStreamReader(System.in));
-        str = br.readLine();
-        TC = Integer.parseInt(str);
-
-        for (int tc = 1; tc <= TC; tc++) {
-            str = br.readLine();
-            st = new StringTokenizer(str, " ");
-
-            N = Integer.parseInt(st.nextToken());
-            Q = Integer.parseInt(st.nextToken());
-            seed = Long.parseLong(st.nextToken());
-
-            makeTree(N-1);
-            usersolution.dfs_init(N, path);
-
-            score = 100;
-            for(int i = 1; i <= Q; i++) {
-                str = br.readLine();
-                st = new StringTokenizer(str, " ");
-
-                K = Integer.parseInt(st.nextToken());
-                ans = Integer.parseInt(st.nextToken());
-
-                ret = usersolution.dfs(K);
-
-                if(ret != ans) score = 0;
-            }
-
-            System.out.println("#" + tc + " : " + score);
-            totalScore += score;
-        }
-
-        System.out.println("#totalScore score : " + totalScore / TC);
-    }
-}
+//import java.util.ArrayList;
+//import java.util.Collections;
+//import java.util.StringTokenizer;
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+//
+//class Edge implements Comparable<Edge>{
+//    public long dis;
+//    public int from;
+//    public int to;
+//    Edge(long dis, int from, int to){
+//        this.from = from;
+//        this.dis = dis;
+//        this.to = to;
+//    }
+//
+//    @Override
+//    public int compareTo(Edge edge) {
+//        if(this.dis < edge.dis) {
+//            return -1;
+//        }
+//        else if(this.dis > edge.dis) {
+//            return 1;
+//        }
+//        return 0;
+//    }
+//}
+//
+//class Solution {
+//
+//    static int n;
+//    static double E;
+//    static ArrayList<Edge> edge;
+//    static long answer=0;
+//    static long[] parent;
+//
+//    static long getParent(long x) {
+//        if(parent[(int)x]==x) return x;
+//        else return parent[(int)x] = getParent(parent[(int)x]);
+//    }
+//
+//    static void unionParent(long a, long b) {
+//        a = getParent(a);
+//        b = getParent(b);
+//        if(a<b) {
+//            parent[(int)b] = a;
+//        }
+//        else {
+//            parent[(int)a] = b;
+//        }
+//    }
+//
+//    static boolean findParent(long a, long b) {
+//        a = getParent(a);
+//        b = getParent(b);
+//        return a==b;
+//    }
+//    //크루스칼(유니온 파인드)
+//    public static void main(String args[]) throws Exception {
+//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//        int T = Integer.parseInt(br.readLine());
+//        for (int t = 1; t <= T; t++) {
+//            // input
+//            n =Integer.parseInt(br.readLine());
+//            StringTokenizer tk = new StringTokenizer(br.readLine());
+//            long[] x = new long[n];
+//            long[] y = new long[n];
+//            for(int i=0;i< n ; i++) {
+//                x[i] = Long.parseLong(tk.nextToken());
+//            }
+//            tk = new StringTokenizer(br.readLine());
+//            for(int i=0; i<n;i ++) {
+//                y[i] = Long.parseLong(tk.nextToken());
+//            }
+//            E = Double.parseDouble(br.readLine());
+//            parent = new long[n];
+//            for(int i=0; i< n ; i++) {
+//                parent[i] =i;
+//            }
+//            //간선 저장
+//            edge = new ArrayList<Edge>();
+//            for(int i=0; i<n;i++) {
+//                for(int j=i+1; j<n; j++) {
+//                    long dis = (x[i]-x[j])*(x[i]-x[j]) + (y[i]-y[j]) * (y[i]-y[j]);
+//                    edge.add(new Edge(dis,i,j));
+//                }
+//            }
+//            //간선 dis 기준 오름차순
+//            Collections.sort(edge);
+//
+//            //solve
+//            for(Edge e : edge) {
+//                //연결되어있지 않다면
+//                if(!findParent(e.from, e.to)) {
+//                    unionParent(e.from, e.to);
+//                    answer+=e.dis;
+//                }
+//            }
+//            //output
+//            System.out.println("#" + t+" " + Math.round(E*answer));
+//
+//            //reset
+//            answer=0;
+//        }
+//    }
+//}
