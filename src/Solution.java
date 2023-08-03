@@ -1,106 +1,224 @@
-//import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.StringTokenizer;
-//import java.io.BufferedReader;
-//import java.io.InputStreamReader;
-//
-//class Edge implements Comparable<Edge>{
-//    public long dis;
-//    public int from;
-//    public int to;
-//    Edge(long dis, int from, int to){
-//        this.from = from;
-//        this.dis = dis;
-//        this.to = to;
-//    }
-//
-//    @Override
-//    public int compareTo(Edge edge) {
-//        if(this.dis < edge.dis) {
-//            return -1;
-//        }
-//        else if(this.dis > edge.dis) {
-//            return 1;
-//        }
-//        return 0;
-//    }
-//}
-//
-//class Solution {
-//
-//    static int n;
-//    static double E;
-//    static ArrayList<Edge> edge;
-//    static long answer=0;
-//    static long[] parent;
-//
-//    static long getParent(long x) {
-//        if(parent[(int)x]==x) return x;
-//        else return parent[(int)x] = getParent(parent[(int)x]);
-//    }
-//
-//    static void unionParent(long a, long b) {
-//        a = getParent(a);
-//        b = getParent(b);
-//        if(a<b) {
-//            parent[(int)b] = a;
-//        }
-//        else {
-//            parent[(int)a] = b;
-//        }
-//    }
-//
-//    static boolean findParent(long a, long b) {
-//        a = getParent(a);
-//        b = getParent(b);
-//        return a==b;
-//    }
-//    //크루스칼(유니온 파인드)
-//    public static void main(String args[]) throws Exception {
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        int T = Integer.parseInt(br.readLine());
-//        for (int t = 1; t <= T; t++) {
-//            // input
-//            n =Integer.parseInt(br.readLine());
-//            StringTokenizer tk = new StringTokenizer(br.readLine());
-//            long[] x = new long[n];
-//            long[] y = new long[n];
-//            for(int i=0;i< n ; i++) {
-//                x[i] = Long.parseLong(tk.nextToken());
-//            }
-//            tk = new StringTokenizer(br.readLine());
-//            for(int i=0; i<n;i ++) {
-//                y[i] = Long.parseLong(tk.nextToken());
-//            }
-//            E = Double.parseDouble(br.readLine());
-//            parent = new long[n];
-//            for(int i=0; i< n ; i++) {
-//                parent[i] =i;
-//            }
-//            //간선 저장
-//            edge = new ArrayList<Edge>();
-//            for(int i=0; i<n;i++) {
-//                for(int j=i+1; j<n; j++) {
-//                    long dis = (x[i]-x[j])*(x[i]-x[j]) + (y[i]-y[j]) * (y[i]-y[j]);
-//                    edge.add(new Edge(dis,i,j));
-//                }
-//            }
-//            //간선 dis 기준 오름차순
-//            Collections.sort(edge);
-//
-//            //solve
-//            for(Edge e : edge) {
-//                //연결되어있지 않다면
-//                if(!findParent(e.from, e.to)) {
-//                    unionParent(e.from, e.to);
-//                    answer+=e.dis;
-//                }
-//            }
-//            //output
-//            System.out.println("#" + t+" " + Math.round(E*answer));
-//
-//            //reset
-//            answer=0;
-//        }
-//    }
-//}
+import java.util.Scanner;
+
+interface Field
+{
+    public final static int NAME     = 0;
+    public final static int NUMBER   = 1;
+    public final static int BIRTHDAY = 2;
+    public final static int EMAIL    = 3;
+    public final static int MEMO     = 4;
+}
+
+class Solution
+{
+    private final static int CMD_INIT   = 0;
+    private final static int CMD_ADD    = 1;
+    private final static int CMD_DELETE = 2;
+    private final static int CMD_CHANGE = 3;
+    private final static int CMD_SEARCH = 4;
+
+    static class Result
+    {
+        public int count;
+        public String str;
+    }
+
+    private static Scanner sc;
+    private static UserSolution userSolution = new UserSolution();
+
+    private static int Score;
+    private static int ScoreIdx;
+    private static String name, number, birthday, email, memo;
+
+    private static String lastname[] = { "kim", "lee", "park", "choi", "jung", "kang", "cho", "oh", "jang", "lim" };
+    private static int lastname_length[] = { 3, 3, 4, 4, 4, 4, 3, 2, 4, 3 };
+
+    private static int mSeed;
+    private static int mrand(int num)
+    {
+        mSeed = mSeed * 1103515245 + 37209;
+        if (mSeed < 0) mSeed *= -1;
+        return ((mSeed >> 8) % num);
+    }
+
+    private static void make_field(int seed)
+    {
+        StringBuilder sbname = new StringBuilder();
+        StringBuilder sbnumber = new StringBuilder();
+        StringBuilder sbbirthday = new StringBuilder();
+        StringBuilder sbemail = new StringBuilder();
+        StringBuilder sbmemo = new StringBuilder();
+
+        int name_length, email_length, memo_length;
+        int num;
+
+        mSeed = seed;
+
+        name_length = 6 + mrand(10);
+        email_length = 10 + mrand(10);
+        memo_length = 5 + mrand(10);
+
+        num = mrand(10);
+        sbname.append(lastname[num]);
+        for (int i = 0; i < name_length - lastname_length[num]; i++) sbname.append((char)('a' + mrand(26)));
+
+        for (int i = 0; i < memo_length; i++) sbmemo.append((char)('a' + mrand(26)));
+
+        for (int i = 0; i < email_length - 6; i++) sbemail.append((char)('a' + mrand(26)));
+        sbemail.append("@");
+        sbemail.append((char)('a' + mrand(26)));
+        sbemail.append(".com");
+
+        sbnumber.append("010");
+        for (int i = 0; i < 8; i++) sbnumber.append((char)('0' + mrand(10)));
+
+        sbbirthday.append("19");
+        num = mrand(100);
+        sbbirthday.append((char)('0' + num / 10));
+        sbbirthday.append((char)('0' + num % 10));
+        num = 1 + mrand(12);
+        sbbirthday.append((char)('0' + num / 10));
+        sbbirthday.append((char)('0' + num % 10));
+        num = 1 + mrand(30);
+        sbbirthday.append((char)('0' + num / 10));
+        sbbirthday.append((char)('0' + num % 10));
+
+        name = sbname.toString();
+        number = sbnumber.toString();
+        birthday = sbbirthday.toString();
+        email = sbemail.toString();
+        memo = sbmemo.toString();
+    }
+
+    private static void cmd_init()
+    {
+        ScoreIdx = Integer.parseInt(sc.next());
+
+        userSolution.InitDB();
+    }
+
+    private static void cmd_add()
+    {
+        int seed = Integer.parseInt(sc.next());
+
+        make_field(seed);
+
+        userSolution.Add(name, number, birthday, email, memo);
+    }
+
+    private static void cmd_delete()
+    {
+        int field = Integer.parseInt(sc.next());
+        String str = sc.next();
+        int check = Integer.parseInt(sc.next());
+
+        int result = userSolution.Delete(field, str);
+        if (result != check)
+            Score -= ScoreIdx;
+    }
+
+    private static void cmd_change()
+    {
+        int field = Integer.parseInt(sc.next());
+        String str = sc.next();
+        int changefield = Integer.parseInt(sc.next());
+        String changestr = sc.next();
+        int check = Integer.parseInt(sc.next());
+
+        int result = userSolution.Change(field, str, changefield, changestr);
+        if (result != check)
+            Score -= ScoreIdx;
+    }
+
+    private static void cmd_search()
+    {
+        int field = Integer.parseInt(sc.next());
+        String str = sc.next();
+        int returnfield = Integer.parseInt(sc.next());
+        String checkstr = sc.next();
+        int check = Integer.parseInt(sc.next());
+
+        Result result = userSolution.Search(field, str, returnfield);
+        if (result.count != check || (result.count == 1 && !checkstr.equals(result.str)))
+            Score -= ScoreIdx;
+    }
+
+    private static void run()
+    {
+        int N = Integer.parseInt(sc.next());
+        for (int i = 0; i < N; i++)
+        {
+            int cmd = Integer.parseInt(sc.next());
+            switch (cmd)
+            {
+                case CMD_INIT:   cmd_init(); break;
+                case CMD_ADD:    cmd_add(); break;
+                case CMD_DELETE: cmd_delete(); break;
+                case CMD_CHANGE: cmd_change(); break;
+                case CMD_SEARCH: cmd_search(); break;
+                default: break;
+            }
+        }
+    }
+
+    private static void init()
+    {
+        Score = 1000;
+        ScoreIdx = 1;
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        //System.setIn(new java.io.FileInputStream("res/sample_input.txt"));
+
+        sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+        int TotalScore = 0;
+        for (int tc = 1; tc <= T; tc++)
+        {
+            init();
+
+            run();
+
+            if (Score < 0)
+                Score = 0;
+
+            TotalScore += Score;
+
+            System.out.println("#" + tc + " " + Score);
+        }
+        System.out.println("TotalScore = " + TotalScore);
+        sc.close();
+    }
+}
+
+class UserSolution {
+    void InitDB()
+    {
+
+    }
+
+    void Add(String name, String number, String birthday, String email, String memo)
+    {
+
+    }
+
+    int Delete(int field, String str)
+    {
+        return -1;
+    }
+
+    int Change(int field, String str, int changefield, String changestr)
+    {
+        return -1;
+    }
+
+    Solution.Result Search(int field, String str, int returnfield)
+    {
+        Solution.Result result = new Solution.Result();
+        result.count = -1;
+
+        return result;
+    }
+}
