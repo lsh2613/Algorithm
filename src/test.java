@@ -1,46 +1,44 @@
 import java.util.*;
 class Solution {
-    public int solution(String begin, String target, String[] words) {
-        int answer = 0;
-        answer = bfs(begin, target, words);
-        return answer==-1? 0 : answer;
-    }
+    public String solution(String number, int k) {
+        StringBuilder answer = new StringBuilder();
+        int[] nums = Arrays.stream(number.split(""))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        int len = number.length()-k; // 구해야 하는 자릿수
 
-    static boolean[] vs;
-    static int bfs(String begin, String target, String[] words){
-        int len = words.length;
-        vs= new boolean[len];
-
-        Queue<String> q = new LinkedList<>();
-        q.offer(begin);
-
-        int cnt=0;
-        while(!q.isEmpty()){
-            for(int j=0;j<q.size();j++){
-                String now = q.poll();
-
-                if(now.equals(target))
-                    return cnt;
-
-                for(int i=0;i<len;i++){
-                    // 방문을 했거나, 다음 단어로 바뀔 수 없으면 생략
-                    if(vs[i]||!canChange(now, words[i])) continue;
-
-                    q.offer(words[i]);
+        int maxIdx=-1;
+        while(len!=0){
+            int max=-1;
+            int point = maxIdx;
+            for(int i=point+1;i<=nums.length-len; i++){
+                if(max<nums[i]){
+                    max=nums[i];
+                    maxIdx=i;
                 }
             }
-            cnt++;
+            answer.append(max);
+            len--;
         }
-        return -1;
 
+        return answer.toString();
     }
+}
 
-    static boolean canChange(String s1, String s2){
-        int cnt=0;
-        for(int i=0;i<s1.length();i++){
-            if(s1.charAt(i)==s2.charAt(i))
-                cnt++;
-        }
-        return cnt==s1.length()-1?true:false;
+class test{
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[][] wires = {
+                {1, 3},
+                {2, 3},
+                {3, 4},
+                {4, 5},
+                {4, 6},
+                {4, 7},
+                {7, 8},
+                {7, 9}
+        };
+
+        System.out.println(solution.solution("1231234",2));
     }
 }
