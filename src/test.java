@@ -1,44 +1,47 @@
 import java.util.*;
-class Solution {
-    public String solution(String number, int k) {
-        StringBuilder answer = new StringBuilder();
-        int[] nums = Arrays.stream(number.split(""))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-        int len = number.length()-k; // 구해야 하는 자릿수
 
-        int maxIdx=-1;
-        while(len!=0){
-            int max=-1;
-            int point = maxIdx;
-            for(int i=point+1;i<=nums.length-len; i++){
-                if(max<nums[i]){
-                    max=nums[i];
-                    maxIdx=i;
-                }
-            }
-            answer.append(max);
-            len--;
-        }
+class Node{
+    int x;
+    int y;
 
-        return answer.toString();
+    Node(int x, int y){
+        this.x=x;
+        this.y=y;
     }
 }
-
-class test{
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[][] wires = {
-                {1, 3},
-                {2, 3},
-                {3, 4},
-                {4, 5},
-                {4, 6},
-                {4, 7},
-                {7, 8},
-                {7, 9}
-        };
-
-        System.out.println(solution.solution("1231234",2));
+class Solution {
+    public int solution(int[][] maps) {
+        return bfs(maps);
     }
+    static int[] dx={-1,1,0,0};
+    static int[] dy={0,0,-1,1};
+
+    static int bfs(int[][] maps){
+        int depth=0;
+        int w=maps.length;
+        int h=maps[0].length;
+        boolean[][] visited = new boolean[w][h];
+        visited[0][0]=true;
+        Queue<Node> q = new LinkedList<>();
+        q.offer(new Node(0,0));
+
+        while(!q.isEmpty()){
+            Node now = q.poll();
+            depth++;
+
+            for(int i=0; i<4; i++){
+                int nx = now.x+dx[i];
+                int ny = now.y+dy[i];
+                if(visited[nx][ny] || nx<0 || ny<0 || nx>=w || ny>=h
+                        || maps[nx][ny]==0)
+                    continue;
+
+                if(nx==w-1 && ny==h-1)
+                    return depth;
+                q.add(new Node(nx, ny));
+            }
+        }
+        return -1;
+    }
+
 }
