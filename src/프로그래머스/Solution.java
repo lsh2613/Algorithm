@@ -1,5 +1,8 @@
 package 프로그래머스;
 
+/**
+ * 그래프 -> 순위 문제인데 플로이드 워셜의 3단 반복문이 이해가 안 가서 다시 풀어볼 문제
+ */
 class Solution {
     public int solution(int n, int[][] results) {
         int answer = 0;
