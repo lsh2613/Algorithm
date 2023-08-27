@@ -32,7 +32,7 @@ public class b2630 {
     static void halfDivision(int left, int right, int up, int down) {
 
         if (isColorPaper(left, right, up, down)) {
-            if (board[left][up]==0)
+            if (board[up][left]==0)
                 white++;
             else
                 blue++;
@@ -54,11 +54,10 @@ public class b2630 {
     }
 
     static boolean isColorPaper(int left, int right, int up, int down) {
-        int sample = board[left][up];
-        int cnt = 0;
+        int sample = board[up][left];
 
-        for (int i = left; i <= right; i++) {
-            for (int j = up; j <= down; j++) {
+        for (int i = up; i <= down; i++) {
+            for (int j = left; j <= right; j++) {
                 if (board[i][j] != sample)
                     return false;
             }
