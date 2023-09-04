@@ -1,11 +1,11 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 class Test{
     public static void main(String[] args) {
-        int cnt = 10;
-        for (int i = 0; i < cnt; i++) {
-            System.out.println("i = " + i);
-            cnt--;
-        }
-        String str = "abcde";
-        System.out.println(str.substring(0, 3));
+        List<Integer> integers = new ArrayList<>(Arrays.asList(7, 8));
+        System.out.println(integers.remove(7));
+        System.out.println(integers);
     }
 }
