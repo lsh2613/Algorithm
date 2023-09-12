@@ -16,7 +16,7 @@ class Node{
 }
 
 public class b1753 {
-    static List<List<Node>> graph = new ArrayList<>();
+    static List<List<Road>> graph = new ArrayList<>();
     static int[] d;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -38,7 +38,7 @@ public class b1753 {
             int to = Integer.parseInt(st.nextToken());
             int dist = Integer.parseInt(st.nextToken());
 
-            graph.get(from).add(new Node(to, dist));
+            graph.get(from).add(new Road(to, dist));
         }
 
         dijkstra(start);
@@ -50,25 +50,25 @@ public class b1753 {
     }
 
     static void dijkstra(int start) {
-        Queue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.distance - n2.distance);
-        pq.offer(new Node(start, 0));
+        Queue<Road> pq = new PriorityQueue<>((n1, n2) -> n1.distance - n2.distance);
+        pq.offer(new Road(start, 0));
         d[start] = 0;
 
         while (!pq.isEmpty()) {
-            Node now = pq.poll();
+            Road now = pq.poll();
             int nowDist = now.distance;
             int nowIdx = now.idx;
 
             if (d[nowIdx] < nowDist) continue; // 굳이 안 써줘도 되지만 d[nowIdx]로 이미 최솟값을 가지고 있는데 더 큰 값의 nowDist가 밑의
                                                 // for문(최소 비용 업데이트 로직)을 실행해봤자 최소 비용을 가질 수 없기 때문에 불필요한 연산을 제거하기 위함이다.
 
-            for (Node adj : graph.get(nowIdx)) {
+            for (Road adj : graph.get(nowIdx)) {
                 int adjIdx = adj.idx;
                 int cost = d[nowIdx] + adj.distance;
 
                 if (d[adjIdx] > cost) {
                     d[adjIdx] = cost;
-                    pq.offer(new Node(adjIdx, cost));
+                    pq.offer(new Road(adjIdx, cost));
                 }
             }
         }

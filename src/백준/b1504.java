@@ -14,7 +14,7 @@ import java.util.*;
 //    }
 //}
 public class b1504 {
-    static List<Node>[] graph;
+    static List<Road>[] graph;
     static int N, E;
 
     public static void main(String[] args) throws IOException {
@@ -35,8 +35,8 @@ public class b1504 {
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
-            graph[a].add(new Node(b, c));
-            graph[b].add(new Node(a, c));
+            graph[a].add(new Road(b, c));
+            graph[b].add(new Road(a, c));
         }
         st = new StringTokenizer(br.readLine());
         int v1 = Integer.parseInt(st.nextToken());
@@ -84,25 +84,25 @@ public class b1504 {
         int[]d = new int[N + 1];
         Arrays.fill(d, Integer.MAX_VALUE);
 
-        Queue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.distance - n2.distance);
-        pq.offer(new Node(start, 0));
+        Queue<Road> pq = new PriorityQueue<>((n1, n2) -> n1.distance - n2.distance);
+        pq.offer(new Road(start, 0));
         d[start] = 0;
 
         while (!pq.isEmpty()) {
-            Node now = pq.poll();
+            Road now = pq.poll();
             int nowIdx = now.idx;
             int nowDist = now.distance;
 
             if (d[nowIdx] < nowDist) continue;
 
-            for (Node adj : graph[nowIdx]) {
+            for (Road adj : graph[nowIdx]) {
                 int adjIdx = adj.idx;
                 int adjDist = adj.distance;
                 int cost = d[nowIdx] + adjDist;
 
                 if (d[adjIdx] > cost) {
                     d[adjIdx] = cost;
-                    pq.offer(new Node(adjIdx, cost));
+                    pq.offer(new Road(adjIdx, cost));
                 }
             }
         }
