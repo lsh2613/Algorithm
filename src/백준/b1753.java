@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-class Node{
-    int idx;
-    int distance;
-
-    public Node(int idx, int distance) {
-        this.idx = idx;
-        this.distance = distance;
-    }
-}
+//class Node{
+//    int idx;
+//    int distance;
+//
+//    public Node(int idx, int distance) {
+//        this.idx = idx;
+//        this.cost = distance;
+//    }
+//}
 
 public class b1753 {
     static List<List<Road>> graph = new ArrayList<>();
