@@ -44,4 +44,5 @@ class Test{
         prime.add(0);
         return prime.stream().mapToInt(Integer::intValue).toArray();
     }
+
 }
