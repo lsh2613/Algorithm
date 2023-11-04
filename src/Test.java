@@ -22,6 +22,7 @@ class Test{
         return IntStream.concat(primes, IntStream.of(0)).toArray();
     }
     static int[] getPrime2(int n) {
+
         ArrayList<Integer> prime = new ArrayList<>();
         int temp[] = new int[n+1];
         int rootN = (int)Math.sqrt(n);
