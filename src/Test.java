@@ -35,6 +35,7 @@ class Test{
                 }
             }
         }
+
         for(int i=2; i<=n; i++) {
             if(temp[i] != 0) {
                 //System.out.println(temp[i]); 디버깅용
