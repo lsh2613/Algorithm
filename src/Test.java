@@ -20,6 +20,7 @@ class Test{
                 .filter(i -> i == 7 || i % 7 != 0);
 
         return IntStream.concat(primes, IntStream.of(0)).toArray();
+
     }
     static int[] getPrime2(int n) {
         ArrayList<Integer> prime = new ArrayList<>();
