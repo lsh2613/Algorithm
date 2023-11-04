@@ -4,6 +4,7 @@ import java.util.stream.IntStream;
 
 class Test{
     public static void main(String[] args) {
+
         int n = 10000;
         long count = Arrays.stream(getPrime(n)).count();
         long count2 = Arrays.stream(getPrime2(n)).count();
