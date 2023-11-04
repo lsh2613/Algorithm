@@ -18,6 +18,7 @@ class Test{
                 .filter(i -> i == 3 || i % 3 != 0)
                 .filter(i -> i == 5 || i % 5 != 0)
                 .filter(i -> i == 7 || i % 7 != 0);
+
         return IntStream.concat(primes, IntStream.of(0)).toArray();
 
     }
