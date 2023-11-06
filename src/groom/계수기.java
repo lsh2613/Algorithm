@@ -28,6 +28,7 @@ class 계수기 {
         for (int i = 0; i < num.length; i++) {
             valueOfNum += valueOfDigits[i] * num[i];
         }
+
         valueOfNum += click;
 
         List<Integer> result = new ArrayList<>();
