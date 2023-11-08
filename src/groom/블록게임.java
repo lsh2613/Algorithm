@@ -49,7 +49,7 @@ class Posiotion {
     }
 }
 
-class Main {
+class 블록게임 {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         HashMap<Posiotion, Integer> posToIdx = new HashMap<>();
