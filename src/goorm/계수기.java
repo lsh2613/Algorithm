@@ -1,13 +1,11 @@
-package groom;
+package goorm;
 
-import javax.swing.text.AttributeSet;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 class 계수기 {
     public static void main(String[] args) throws Exception {
