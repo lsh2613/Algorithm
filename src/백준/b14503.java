@@ -1,11 +1,8 @@
 package 백준;
 
-import com.sun.source.tree.IfTree;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.NotDirectoryException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,7 +19,7 @@ class Room {
         this.d = d;
     }
 }
-public class Main {
+public class b14503 {
     // 북No0 동Ea1 남So2 서We3
     //    0
     //  3   1
