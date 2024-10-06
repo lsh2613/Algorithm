@@ -5,16 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-class Node{
-    int idx;
-    int depth;
-
-    public Node(int idx, int depth) {
-        this.idx = idx;
-        this.depth = depth;
-    }
-}
 class 가장먼노드 {
+    static class Node{
+        int idx;
+        int depth;
+
+        public Node(int idx, int depth) {
+            this.idx = idx;
+            this.depth = depth;
+        }
+    }
     static List<ArrayList<Integer>> nodes = new ArrayList<>();
     static boolean[] visited;
     static int maxDepth = -1;
@@ -22,7 +22,7 @@ class 가장먼노드 {
     static int answer = 0;
 
     public int solution(int n, int[][] edge) {
-        
+
         // init
         edges = edge;
         visited = new boolean[n + 1];
@@ -61,6 +61,6 @@ class 가장먼노드 {
                 q.offer(new Node(adj, now.depth + 1));
             }
         }
-        
+
     }
 }

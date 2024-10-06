@@ -4,32 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//
-//import java.util.ArrayList;
-//
-public class 이모티콘 {
-    /*
-    [[40, 2900], [23, 10000], [11, 5200], [5, 5900], [40, 3100], [27, 9200], [32, 6900]]
-    [1300, 1500, 1600, 4900]
-    [4, 13860]
-
-    [[40, 10000], [25, 10000]]
-    [7000, 9000]
-    [1, 5400]
-     */
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int users[][] = {
-                {40, 10000}, {25, 10000}
-        };
-        int emotion[] = {7000, 9000};
-
-        System.out.println(Arrays.toString(solution.solution(users, emotion)));
-    }
-}
-
-
-class Solution {
+class 이모티콘 {
     static int[] discounts = {10, 20, 30, 40};
     static List<int[]> permutations;
     static int[] permutation;
