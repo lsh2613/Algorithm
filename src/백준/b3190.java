@@ -60,7 +60,7 @@ public class b3190 {
 
             moveForward(head);
             // 종료 조건
-            if (outOFBoard(head.x, head.y) || isSnake(head.x, head.y)) {
+            if (outOfBoard(head.x, head.y) || isSnake(head.x, head.y)) {
                 System.out.println(time);
                 return;
             }
@@ -108,7 +108,7 @@ public class b3190 {
         }
     }
 
-    static boolean outOFBoard(int x, int y) {
+    static boolean outOfBoard(int x, int y) {
         return x < 1 || y < 1 || x > N || y > N;
     }
 
